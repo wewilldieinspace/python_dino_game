@@ -1,16 +1,13 @@
-import datetime
-import os
-import random
 import threading
-
+import random
 import pygame
 
 from const import SCREEN_HEIGHT, SCREEN_WIDTH, \
-    SCREEN, RUN_IMAGE, \
-    JUMP_IMAGE, DUCK_IMAGE, \
-    DEAD_IMAGE, FLOOR
+    SCREEN, FLOOR, \
+    SMALL_CACTUS, LARGE_CACTUS
 
-from Dino import Dino
+from Dino.Dino import Dino
+from Obstacle.Cactus import SmallCactus, LargeCactus
 
 pygame.init()
 
@@ -27,6 +24,7 @@ def main():
     game_speed = 20
     x_pos_bg = 0
     y_pos_bg = 400
+    obstacles_list = []
 
     def background():
         global x_pos_bg, y_pos_bg
@@ -51,6 +49,16 @@ def main():
 
         player.draw(SCREEN)
         player.update(userInput)
+
+        if len(obstacles_list) == 0:
+            if random.randint(0, 2) == 0:
+                obstacles_list.append(SmallCactus(SMALL_CACTUS))
+            if random.randint(0, 2) == 1:
+                obstacles_list.append(LargeCactus(LARGE_CACTUS))
+
+        for obstacle in obstacles_list:
+            obstacle.draw(SCREEN)
+            obstacle.update(obstacles_list, game_speed)
 
         background()
         pygame.display.update()

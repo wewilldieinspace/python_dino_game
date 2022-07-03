@@ -6,10 +6,10 @@ from const import SCREEN_HEIGHT, SCREEN_WIDTH, \
 
 
 class Dino:
-    X_POS = 80
-    Y_POS = 360
+    X_POS = 100
+    Y_POS = 340
     Y_POS_DUCK = 390
-    JUMP_VEL = 8.5
+    JUMP_VEL = 7.5
 
     def __init__(self):
         self.run_image = RUN_IMAGE
