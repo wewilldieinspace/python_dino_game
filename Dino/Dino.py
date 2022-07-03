@@ -71,4 +71,4 @@ class Dino:
         pass
 
     def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        SCREEN.blit(self.image, (self.dino_rect.x + 45, self.dino_rect.y))

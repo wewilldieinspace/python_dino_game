@@ -14,4 +14,4 @@ class Obstacle:
             obstacles_list.pop()
 
     def draw(self, SCREEN):
-        SCREEN.blit(self.image[self.type], self.rect)
+        SCREEN.blit(self.image[self.type], (self.rect.x, self.rect.y - 40))

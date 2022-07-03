@@ -1,13 +1,12 @@
-import threading
-import random
 import pygame
-
-from const import SCREEN_HEIGHT, SCREEN_WIDTH, \
-    SCREEN, FLOOR, \
-    SMALL_CACTUS, LARGE_CACTUS
+import random
+import threading
 
 from Dino.Dino import Dino
 from Obstacle.Cactus import SmallCactus, LargeCactus
+from const import SCREEN_HEIGHT, SCREEN_WIDTH, \
+    SCREEN, FLOOR, \
+    SMALL_CACTUS, LARGE_CACTUS
 
 pygame.init()
 
@@ -15,6 +14,7 @@ pygame.display.set_caption('Dino Game')
 
 ICON = pygame.image.load('assets/Icon.png')
 pygame.display.set_icon(ICON)
+
 
 def main():
     global game_speed, x_pos_bg, y_pos_bg
@@ -25,6 +25,7 @@ def main():
     x_pos_bg = 0
     y_pos_bg = 400
     obstacles_list = []
+    death_count = 0
 
     def background():
         global x_pos_bg, y_pos_bg
@@ -59,6 +60,11 @@ def main():
         for obstacle in obstacles_list:
             obstacle.draw(SCREEN)
             obstacle.update(obstacles_list, game_speed)
+
+            if player.dino_rect.colliderect(obstacle.rect):
+                pygame.time.delay(2000)
+                death_count += 1
+                menu(death_count)
 
         background()
         pygame.display.update()
