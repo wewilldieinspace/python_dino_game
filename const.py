@@ -19,4 +19,4 @@ DUCK_IMAGE = [
 
 DEAD_IMAGE = pygame.image.load(os.path.join('assets/Dino/Dead.png'))
 
-TRACK = pygame.image.load(os.path.join('assets/Floor.png'))
+FLOOR = pygame.image.load(os.path.join('assets/Floor.png'))

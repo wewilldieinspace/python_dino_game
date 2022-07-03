@@ -2,13 +2,13 @@ import pygame
 from const import SCREEN_HEIGHT, SCREEN_WIDTH, \
     SCREEN, RUN_IMAGE, \
     JUMP_IMAGE, DUCK_IMAGE, \
-    DEAD_IMAGE, TRACK
+    DEAD_IMAGE, FLOOR
 
 
 class Dino:
     X_POS = 80
-    Y_POS = 310
-    Y_POS_DUCK = 340
+    Y_POS = 360
+    Y_POS_DUCK = 390
     JUMP_VEL = 8.5
 
     def __init__(self):
@@ -38,18 +38,18 @@ class Dino:
         if self.step_index >= 10:
             self.step_index = 0
 
-        # if (userInput[pygame.K_UP] or userInput[pygame.K_SPACE]) and not self.dino_jump:
-        #     self.dino_jump = True
-        #     self.dino_duck = False
-        #     self.dino_run = False
-        # elif userInput[pygame.K_DOWN] and not self.dino_jump:
-        #     self.dino_jump = False
-        #     self.dino_duck = True
-        #     self.dino_run = False
-        # elif not (userInput[pygame.K_DOWN] or self.dino_jump):
-        #     self.dino_jump = False
-        #     self.dino_duck = False
-        self.dino_run = True
+        if (userInput[pygame.K_UP] or userInput[pygame.K_SPACE]) and not self.dino_jump:
+            self.dino_duck = False
+            self.dino_run = False
+            self.dino_jump = True
+        elif userInput[pygame.K_DOWN] and not self.dino_jump:
+            self.dino_duck = True
+            self.dino_run = False
+            self.dino_jump = False
+        elif not (self.dino_jump or userInput[pygame.K_DOWN]):
+            self.dino_duck = False
+            self.dino_run = True
+            self.dino_jump = False
 
     def run(self):
         self.image = self.run_image[self.step_index // 5]
@@ -59,9 +59,15 @@ class Dino:
         self.step_index += 1
 
     def jump(self):
-        pass
+        self.image = self.jump_image
+        if self.dino_jump:
+            self.dino_rect.y -= self.jump_vel * 4
+            self.jump_vel -= 0.8
+        if self.dino_rect.y >= self.Y_POS:
+            self.dino_jump = False
+            self.jump_vel = self.JUMP_VEL
 
-    def crouch(self):
+    def duck(self):
         pass
 
     def draw(self, SCREEN):
